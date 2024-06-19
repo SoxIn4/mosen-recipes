@@ -5,6 +5,7 @@
     <key>Description</key>
     <string>
     Download the Appsforlife Boxshot Application
+    ARCH must be either ARM or Intel
     </string>
     <key>Identifier</key>
     <string>com.github.mosen.download.Appsforlife.Boxshot</string>
@@ -12,8 +13,10 @@
     <dict>
         <key>NAME</key>
         <string>Boxshot</string>
-        <key>DOWNLOAD_URL</key>
-        <string>https://cdn.appsforlife.com/apps/boxshot-4.15.1/Boxshot4.dmg</string>
+        <key>DOWNLOADS_URL</key>
+        <string>https://boxshot.com/downloads/</string>
+        <key>ARCH</key>
+        <string>ARM</string>
     </dict>
     <key>MinimumVersion</key>
     <string>0.2.0</string>
@@ -21,13 +24,26 @@
     <array>
         <dict>
             <key>Processor</key>
+            <string>URLTextSearcher</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%DOWNLOADS_URL%</string>
+                <key>re_pattern</key>
+                <string>\/\/cdn\.appsforlife\.com\/boxshot\/[1-9]\/[1-9]\.[1-9]\.[1-9]\/Boxshot[1-9]_%ARCH%\.dmg</string>
+                <key>result_output_var_name</key>
+                <string>DOWNLOAD_URL</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
             <string>URLDownloader</string>
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>%DOWNLOAD_URL%</string>
+                <string>https:%DOWNLOAD_URL%</string>
                 <key>filename</key>
-                <string>%NAME%.dmg</string>
+                <string>%NAME%_%ARCH%.dmg</string>
             </dict>
         </dict>
         <dict>

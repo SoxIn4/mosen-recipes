@@ -39,17 +39,57 @@
   <key>ParentRecipe</key>
   <string>com.github.mosen.download.Appsforlife.Origami</string>
   <key>Process</key>
-  <array>      
+  <array>
     <dict>
-        <key>Processor</key>
-        <string>MunkiImporter</string>
-        <key>Arguments</key>
+      <key>Processor</key>
+      <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
+      <key>Arguments</key>
+      <dict>
+        <key>input_string</key>
+        <string>%ARCH%</string>
+        <key>find</key>
+        <string>ARM</string>
+        <key>replace</key>
+        <string>arm64</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>Processor</key>
+      <string>com.github.homebysix.FindAndReplace/FindAndReplace</string>
+      <key>Arguments</key>
+      <dict>
+        <key>input_string</key>
+        <string>%output_string%</string>
+        <key>find</key>
+        <string>Intel</string>
+        <key>replace</key>
+        <string>x86_64</string>
+      </dict>
+    </dict>
+    <dict>
+      <key>Processor</key>
+      <string>MunkiPkginfoMerger</string>
+      <key>Arguments</key>
+      <dict>
+        <key>additional_pkginfo</key>
         <dict>
-            <key>pkg_path</key>
-            <string>%pathname%</string>
-            <key>repo_subdirectory</key>
-            <string>%MUNKI_REPO_SUBDIR%</string>
+          <key>supported_architectures</key>
+            <array>
+              <string>%output_string%</string>
+            </array>
         </dict>
+      </dict>
+		</dict>       
+    <dict>
+      <key>Processor</key>
+      <string>MunkiImporter</string>
+      <key>Arguments</key>
+      <dict>
+          <key>pkg_path</key>
+          <string>%pathname%</string>
+          <key>repo_subdirectory</key>
+          <string>%MUNKI_REPO_SUBDIR%</string>
+      </dict>
     </dict>
   </array>
 </dict>
